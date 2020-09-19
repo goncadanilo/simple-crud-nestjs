@@ -6,7 +6,7 @@ import { ProductsService } from './products.service';
 
 describe('ProductsService', () => {
   let service: ProductsService;
-  let validateProduct: Products;
+  let mockProduct: Products;
 
   const mockRepository = {
     create: jest.fn(),
@@ -22,7 +22,7 @@ describe('ProductsService', () => {
     }).compile();
 
     service = module.get<ProductsService>(ProductsService);
-    validateProduct = TestUtil.giveAMeAValidProduct();
+    mockProduct = TestUtil.getMockProduct();
   });
 
   beforeEach(() => {
@@ -36,19 +36,19 @@ describe('ProductsService', () => {
 
   describe('when create product', () => {
     it('should create a product', async () => {
-      mockRepository.create.mockReturnValueOnce(validateProduct);
-      mockRepository.save.mockReturnValueOnce(validateProduct);
+      mockRepository.create.mockReturnValueOnce(mockProduct);
+      mockRepository.save.mockReturnValueOnce(mockProduct);
 
       const product = {
-        title: validateProduct.title,
-        description: validateProduct.description,
-        price: validateProduct.price,
+        title: mockProduct.title,
+        description: mockProduct.description,
+        price: mockProduct.price,
       };
 
       const savedProduct = await service.createProduct(product);
 
       expect(savedProduct).toHaveProperty('id', 1);
-      expect(savedProduct).toMatchObject(validateProduct);
+      expect(savedProduct).toMatchObject(mockProduct);
       expect(mockRepository.create).toBeCalledWith(product);
       expect(mockRepository.create).toBeCalledTimes(1);
       expect(mockRepository.save).toBeCalledTimes(1);
