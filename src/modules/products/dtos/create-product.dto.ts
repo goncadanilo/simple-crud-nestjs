@@ -1,6 +1,6 @@
 import {
-  IsDecimal,
   IsNotEmpty,
+  IsNumber,
   IsPositive,
   IsString,
   MaxLength,
@@ -16,8 +16,8 @@ export class CreateProductDto {
   @MaxLength(200)
   description: string;
 
-  @IsDecimal()
-  @IsNotEmpty()
+  @IsNumber()
   @IsPositive()
+  @IsNotEmpty()
   price: number;
 }
