@@ -13,6 +13,7 @@ describe('Products (e2e)', () => {
   const mockProductsService = {
     createProduct: jest.fn(),
     findAllProducts: jest.fn(),
+    findProductById: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -32,6 +33,7 @@ describe('Products (e2e)', () => {
   beforeEach(() => {
     mockProductsService.createProduct.mockReset();
     mockProductsService.findAllProducts.mockReset();
+    mockProductsService.findProductById.mockReset();
   });
 
   afterAll(async () => {
@@ -77,6 +79,22 @@ describe('Products (e2e)', () => {
       ]);
       expect(response.status).toBe(200);
       expect(mockProductsService.findAllProducts).toBeCalledTimes(1);
+    });
+  });
+
+  describe('/products/:id (GET)', () => {
+    it('should search a product by id and return it with status code 200', async () => {
+      mockProductsService.findProductById.mockReturnValue(mockProduct);
+
+      const response = await request(app.getHttpServer()).get('/products/1');
+
+      expect(response.body).toMatchObject({
+        ...mockProduct,
+        createdAt: mockProduct.createdAt.toISOString(),
+      });
+      expect(response.status).toBe(200);
+      expect(mockProductsService.findProductById).toBeCalledWith('1');
+      expect(mockProductsService.findProductById).toBeCalledTimes(1);
     });
   });
 });
