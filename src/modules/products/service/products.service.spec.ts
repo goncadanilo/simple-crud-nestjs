@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { TestUtil } from '../../../../test/util/TestUtil';
@@ -12,6 +13,7 @@ describe('ProductsService', () => {
     create: jest.fn(),
     save: jest.fn(),
     find: jest.fn(),
+    findOne: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -30,6 +32,7 @@ describe('ProductsService', () => {
     mockRepository.create.mockReset();
     mockRepository.save.mockReset();
     mockRepository.find.mockReset();
+    mockRepository.findOne.mockReset();
   });
 
   it('should be defined', () => {
@@ -65,6 +68,29 @@ describe('ProductsService', () => {
 
       expect(products).toHaveLength(1);
       expect(mockRepository.find).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when search product by id', () => {
+    it('should find a existing product', async () => {
+      mockRepository.findOne.mockReturnValue(mockProduct);
+
+      const product = await service.findProductById('1');
+
+      expect(product).toMatchObject(mockProduct);
+      expect(mockRepository.findOne).toBeCalledWith('1');
+      expect(mockRepository.findOne).toBeCalledTimes(1);
+    });
+
+    it('should return a exception when does not to find a product', async () => {
+      mockRepository.findOne.mockReturnValue(null);
+
+      await service.findProductById('3').catch(error => {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error).toMatchObject({ message: 'Product not found' });
+        expect(mockRepository.findOne).toBeCalledWith('3');
+        expect(mockRepository.findOne).toBeCalledTimes(1);
+      });
     });
   });
 });

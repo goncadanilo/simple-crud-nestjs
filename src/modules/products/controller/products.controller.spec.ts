@@ -11,6 +11,7 @@ describe('ProductsController', () => {
   const mockProductsService = {
     createProduct: jest.fn(),
     findAllProducts: jest.fn(),
+    findProductById: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -26,6 +27,7 @@ describe('ProductsController', () => {
   beforeEach(() => {
     mockProductsService.createProduct.mockReset();
     mockProductsService.findAllProducts.mockReset();
+    mockProductsService.findProductById.mockReset();
   });
 
   it('should be defined', () => {
@@ -60,6 +62,18 @@ describe('ProductsController', () => {
       expect(products).toHaveLength(1);
       expect(products).toMatchObject([mockProduct]);
       expect(mockProductsService.findAllProducts).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when search product by id', () => {
+    it('should find a existing product and return it', async () => {
+      mockProductsService.findProductById.mockReturnValue(mockProduct);
+
+      const product = await controller.findProductById('1');
+
+      expect(product).toMatchObject(mockProduct);
+      expect(mockProductsService.findProductById).toBeCalledWith('1');
+      expect(mockProductsService.findProductById).toBeCalledTimes(1);
     });
   });
 });
