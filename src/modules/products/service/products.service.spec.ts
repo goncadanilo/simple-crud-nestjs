@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { TestUtil } from '../../../../test/util/TestUtil';
@@ -79,6 +80,17 @@ describe('ProductsService', () => {
       expect(product).toMatchObject(mockProduct);
       expect(mockRepository.findOne).toBeCalledWith(1);
       expect(mockRepository.findOne).toBeCalledTimes(1);
+    });
+
+    it('should return a exception when does not to find a product', async () => {
+      mockRepository.findOne.mockReturnValue(null);
+
+      await service.findProductById(3).catch(error => {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error).toMatchObject({ message: 'Product not found' });
+        expect(mockRepository.findOne).toBeCalledWith(3);
+        expect(mockRepository.findOne).toBeCalledTimes(1);
+      });
     });
   });
 });
