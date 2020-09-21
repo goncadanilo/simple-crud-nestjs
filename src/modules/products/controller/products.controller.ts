@@ -27,6 +27,8 @@ export class ProductsController {
 
   @Get(':id')
   @HttpCode(200)
+  @ApiOperation({ summary: 'Search a products by id' })
+  @ApiResponse({ status: 200, description: 'The found product' })
   async findProductById(@Param('id') id: string): Promise<Products> {
     return await this.productsService.findProductById(id);
   }
