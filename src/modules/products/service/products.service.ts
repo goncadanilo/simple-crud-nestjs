@@ -20,7 +20,7 @@ export class ProductsService {
     return await this.repository.save(product);
   }
 
-  async findProductById(id: number): Promise<Products> {
+  async findProductById(id: string): Promise<Products> {
     const product = await this.repository.findOne(id);
 
     if (!product) {
