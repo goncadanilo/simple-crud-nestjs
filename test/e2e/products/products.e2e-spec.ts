@@ -29,6 +29,11 @@ describe('Products (e2e)', () => {
     mockProduct = TestUtil.getMockProduct();
   });
 
+  beforeEach(() => {
+    mockProductsService.createProduct.mockReset();
+    mockProductsService.findAllProducts.mockReset();
+  });
+
   afterAll(async () => {
     await app.close();
   });
