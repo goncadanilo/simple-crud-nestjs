@@ -19,4 +19,8 @@ export class ProductsService {
     const product = this.repository.create(data);
     return await this.repository.save(product);
   }
+
+  async findProductById(id: number): Promise<Products> {
+    return await this.repository.findOne(id);
+  }
 }
