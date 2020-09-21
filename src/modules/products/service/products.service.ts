@@ -11,6 +11,10 @@ export class ProductsService {
     private repository: Repository<Products>,
   ) {}
 
+  async findAllProducts(): Promise<Products[]> {
+    return await this.repository.find();
+  }
+
   async createProduct(data: CreateProductDto): Promise<Products> {
     const product = this.repository.create(data);
     return await this.repository.save(product);
