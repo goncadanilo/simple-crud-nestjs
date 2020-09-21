@@ -58,6 +58,7 @@ describe('ProductsController', () => {
       const products = await controller.findAllProducts();
 
       expect(products).toHaveLength(1);
+      expect(products).toMatchObject([mockProduct]);
       expect(mockProductsService.findAllProducts).toBeCalledTimes(1);
     });
   });
