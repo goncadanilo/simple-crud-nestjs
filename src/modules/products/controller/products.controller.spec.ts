@@ -23,6 +23,11 @@ describe('ProductsController', () => {
     mockProduct = TestUtil.getMockProduct();
   });
 
+  beforeEach(() => {
+    mockProductsService.createProduct.mockReset();
+    mockProductsService.findAllProducts.mockReset();
+  });
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
