@@ -11,6 +11,7 @@ describe('ProductsService', () => {
   const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
+    find: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -28,6 +29,7 @@ describe('ProductsService', () => {
   beforeEach(() => {
     mockRepository.create.mockReset();
     mockRepository.save.mockReset();
+    mockRepository.find.mockReset();
   });
 
   it('should be defined', () => {
@@ -52,6 +54,17 @@ describe('ProductsService', () => {
       expect(mockRepository.create).toBeCalledWith(product);
       expect(mockRepository.create).toBeCalledTimes(1);
       expect(mockRepository.save).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when search all products', () => {
+    it('should list all products', async () => {
+      mockRepository.find.mockReturnValue([mockProduct]);
+
+      const products = await service.findAllProducts();
+
+      expect(products).toHaveLength(1);
+      expect(mockRepository.find).toBeCalledTimes(1);
     });
   });
 });

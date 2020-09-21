@@ -10,6 +10,7 @@ describe('ProductsController', () => {
 
   const mockProductsService = {
     createProduct: jest.fn(),
+    findAllProducts: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -22,12 +23,17 @@ describe('ProductsController', () => {
     mockProduct = TestUtil.getMockProduct();
   });
 
+  beforeEach(() => {
+    mockProductsService.createProduct.mockReset();
+    mockProductsService.findAllProducts.mockReset();
+  });
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
   describe('when create product', () => {
-    it('should create a product', async () => {
+    it('should create a product and return it', async () => {
       mockProductsService.createProduct.mockReturnValue(mockProduct);
 
       const product = {
@@ -42,6 +48,18 @@ describe('ProductsController', () => {
       expect(createdProduct).toMatchObject(mockProduct);
       expect(mockProductsService.createProduct).toBeCalledWith(product);
       expect(mockProductsService.createProduct).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when search all products', () => {
+    it('should search all products and return them', async () => {
+      mockProductsService.findAllProducts.mockReturnValue([mockProduct]);
+
+      const products = await controller.findAllProducts();
+
+      expect(products).toHaveLength(1);
+      expect(products).toMatchObject([mockProduct]);
+      expect(mockProductsService.findAllProducts).toBeCalledTimes(1);
     });
   });
 });
