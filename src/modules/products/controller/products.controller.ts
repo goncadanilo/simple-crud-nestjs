@@ -11,6 +11,8 @@ export class ProductsController {
 
   @Get()
   @HttpCode(200)
+  @ApiOperation({ summary: 'Search all products' })
+  @ApiResponse({ status: 200, description: 'The found products' })
   async findAllProducts(): Promise<Products[]> {
     return await this.productsService.findAllProducts();
   }
