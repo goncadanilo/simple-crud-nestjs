@@ -13,6 +13,7 @@ describe('ProductsController', () => {
     findAllProducts: jest.fn(),
     findProductById: jest.fn(),
     updateProduct: jest.fn(),
+    deleteProduct: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -30,6 +31,7 @@ describe('ProductsController', () => {
     mockProductsService.findAllProducts.mockReset();
     mockProductsService.findProductById.mockReset();
     mockProductsService.updateProduct.mockReset();
+    mockProductsService.deleteProduct.mockReset();
   });
 
   it('should be defined', () => {
@@ -101,6 +103,15 @@ describe('ProductsController', () => {
         productTitleUpdate,
       );
       expect(mockProductsService.updateProduct).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when delete a product', () => {
+    it('should delete a existing product', async () => {
+      await controller.deleteProduct('1');
+
+      expect(mockProductsService.deleteProduct).toBeCalledWith('1');
+      expect(mockProductsService.deleteProduct).toBeCalledTimes(1);
     });
   });
 });
