@@ -12,6 +12,7 @@ describe('ProductsController', () => {
     createProduct: jest.fn(),
     findAllProducts: jest.fn(),
     findProductById: jest.fn(),
+    updateProduct: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -28,6 +29,7 @@ describe('ProductsController', () => {
     mockProductsService.createProduct.mockReset();
     mockProductsService.findAllProducts.mockReset();
     mockProductsService.findProductById.mockReset();
+    mockProductsService.updateProduct.mockReset();
   });
 
   it('should be defined', () => {
@@ -74,6 +76,31 @@ describe('ProductsController', () => {
       expect(product).toMatchObject(mockProduct);
       expect(mockProductsService.findProductById).toBeCalledWith('1');
       expect(mockProductsService.findProductById).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when update a product', () => {
+    it('should update a existing product and return it', async () => {
+      const productTitleUpdate = {
+        title: 'Update Product Title',
+      };
+
+      mockProductsService.updateProduct.mockReturnValue({
+        ...mockProduct,
+        ...productTitleUpdate,
+      });
+
+      const updatedProduct = await controller.updateProduct(
+        '1',
+        productTitleUpdate,
+      );
+
+      expect(updatedProduct).toMatchObject(productTitleUpdate);
+      expect(mockProductsService.updateProduct).toBeCalledWith(
+        '1',
+        productTitleUpdate,
+      );
+      expect(mockProductsService.updateProduct).toBeCalledTimes(1);
     });
   });
 });

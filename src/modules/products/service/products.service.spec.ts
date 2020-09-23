@@ -14,6 +14,7 @@ describe('ProductsService', () => {
     save: jest.fn(),
     find: jest.fn(),
     findOne: jest.fn(),
+    update: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -33,6 +34,7 @@ describe('ProductsService', () => {
     mockRepository.save.mockReset();
     mockRepository.find.mockReset();
     mockRepository.findOne.mockReset();
+    mockRepository.update.mockReset();
   });
 
   it('should be defined', () => {
@@ -91,6 +93,40 @@ describe('ProductsService', () => {
         expect(mockRepository.findOne).toBeCalledWith('3');
         expect(mockRepository.findOne).toBeCalledTimes(1);
       });
+    });
+  });
+
+  describe('when update a product', () => {
+    it('should update a existing product', async () => {
+      const productTitleUpdate = {
+        title: 'Update Product Title',
+      };
+
+      mockRepository.findOne.mockReturnValue(mockProduct);
+      mockRepository.update.mockReturnValue({
+        ...mockProduct,
+        ...productTitleUpdate,
+      });
+      mockRepository.create.mockReturnValue({
+        ...mockProduct,
+        ...productTitleUpdate,
+      });
+
+      const updatedProduct = await service.updateProduct(
+        '1',
+        productTitleUpdate,
+      );
+
+      expect(updatedProduct).toMatchObject(productTitleUpdate);
+      expect(mockRepository.findOne).toBeCalledWith('1');
+      expect(mockRepository.findOne).toBeCalledTimes(1);
+      expect(mockRepository.update).toBeCalledWith('1', productTitleUpdate);
+      expect(mockRepository.update).toBeCalledTimes(1);
+      expect(mockRepository.create).toBeCalledWith({
+        ...mockProduct,
+        ...productTitleUpdate,
+      });
+      expect(mockRepository.create).toBeCalledTimes(1);
     });
   });
 });
