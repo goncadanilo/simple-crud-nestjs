@@ -15,6 +15,7 @@ describe('ProductsService', () => {
     find: jest.fn(),
     findOne: jest.fn(),
     update: jest.fn(),
+    delete: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -35,6 +36,7 @@ describe('ProductsService', () => {
     mockRepository.find.mockReset();
     mockRepository.findOne.mockReset();
     mockRepository.update.mockReset();
+    mockRepository.delete.mockReset();
   });
 
   it('should be defined', () => {
@@ -127,6 +129,20 @@ describe('ProductsService', () => {
         ...productTitleUpdate,
       });
       expect(mockRepository.create).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when delete a product', () => {
+    it('should delete a existing product', async () => {
+      mockRepository.findOne.mockReturnValue(mockProduct);
+      mockRepository.delete.mockReturnValue(mockProduct);
+
+      await service.deleteProduct('1');
+
+      expect(mockRepository.findOne).toBeCalledWith('1');
+      expect(mockRepository.findOne).toBeCalledTimes(1);
+      expect(mockRepository.delete).toBeCalledWith('1');
+      expect(mockRepository.delete).toBeCalledTimes(1);
     });
   });
 });

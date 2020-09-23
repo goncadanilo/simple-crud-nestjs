@@ -15,6 +15,7 @@ describe('Products (e2e)', () => {
     findAllProducts: jest.fn(),
     findProductById: jest.fn(),
     updateProduct: jest.fn(),
+    deleteProduct: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -36,6 +37,7 @@ describe('Products (e2e)', () => {
     mockProductsService.findAllProducts.mockReset();
     mockProductsService.findProductById.mockReset();
     mockProductsService.updateProduct.mockReset();
+    mockProductsService.deleteProduct.mockReset();
   });
 
   afterAll(async () => {
@@ -43,7 +45,7 @@ describe('Products (e2e)', () => {
   });
 
   describe('/products (POST)', () => {
-    it('should create a product and return it with status code 201', async () => {
+    it('should create a product and return it with http code 201', async () => {
       mockProductsService.createProduct.mockReturnValue(mockProduct);
 
       const product = {
@@ -68,7 +70,7 @@ describe('Products (e2e)', () => {
   });
 
   describe('/products (GET)', () => {
-    it('should search all products and return them with status code 200', async () => {
+    it('should search all products and return them with http code 200', async () => {
       mockProductsService.findAllProducts.mockReturnValue([mockProduct]);
 
       const response = await request(app.getHttpServer()).get('/products');
@@ -85,7 +87,7 @@ describe('Products (e2e)', () => {
   });
 
   describe('/products/:id (GET)', () => {
-    it('should search a product by id and return it with status code 200', async () => {
+    it('should search a product by id and return it with http code 200', async () => {
       mockProductsService.findProductById.mockReturnValue(mockProduct);
 
       const response = await request(app.getHttpServer()).get('/products/1');
@@ -101,7 +103,7 @@ describe('Products (e2e)', () => {
   });
 
   describe('/products/:id (PUT)', () => {
-    it('should update a existing product and return it with status code 200', async () => {
+    it('should update a existing product and return it with http code 200', async () => {
       const productTitleUpdate = {
         title: 'Update Product Title',
       };
@@ -122,6 +124,16 @@ describe('Products (e2e)', () => {
         productTitleUpdate,
       );
       expect(mockProductsService.updateProduct).toBeCalledTimes(1);
+    });
+  });
+
+  describe('/products/:id (DELETE)', () => {
+    it('should delete a existing product and return http code 204', async () => {
+      const response = await request(app.getHttpServer()).delete('/products/1');
+
+      expect(response.status).toBe(204);
+      expect(mockProductsService.deleteProduct).toBeCalledWith('1');
+      expect(mockProductsService.deleteProduct).toBeCalledTimes(1);
     });
   });
 });
