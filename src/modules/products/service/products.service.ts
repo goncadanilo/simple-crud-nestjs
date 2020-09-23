@@ -38,10 +38,8 @@ export class ProductsService {
     return this.repository.create({ ...product, ...data });
   }
 
-  async deleteProduct(id: string): Promise<boolean> {
-    const product = await this.findProductById(id);
-    const deletedProduct = await this.repository.delete(product);
-
-    return deletedProduct ? true : false;
+  async deleteProduct(id: string): Promise<void> {
+    await this.findProductById(id);
+    await this.repository.delete(id);
   }
 }

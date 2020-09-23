@@ -137,12 +137,11 @@ describe('ProductsService', () => {
       mockRepository.findOne.mockReturnValue(mockProduct);
       mockRepository.delete.mockReturnValue(mockProduct);
 
-      const deletedProduct = await service.deleteProduct('1');
+      await service.deleteProduct('1');
 
-      expect(deletedProduct).toBe(true);
       expect(mockRepository.findOne).toBeCalledWith('1');
       expect(mockRepository.findOne).toBeCalledTimes(1);
-      expect(mockRepository.delete).toBeCalledWith(mockProduct);
+      expect(mockRepository.delete).toBeCalledWith('1');
       expect(mockRepository.delete).toBeCalledTimes(1);
     });
   });
