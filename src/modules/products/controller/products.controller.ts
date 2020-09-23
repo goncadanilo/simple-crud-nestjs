@@ -44,6 +44,8 @@ export class ProductsController {
 
   @Put(':id')
   @HttpCode(200)
+  @ApiOperation({ summary: 'Update a product' })
+  @ApiResponse({ status: 200, description: 'Updated product' })
   async updateProduct(
     @Param('id') id: string,
     @Body() data: UpdateProductDto,
