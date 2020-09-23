@@ -56,6 +56,8 @@ export class ProductsController {
 
   @Delete(':id')
   @HttpCode(204)
+  @ApiOperation({ summary: 'Delete a product' })
+  @ApiResponse({ status: 204, description: 'Deleted product' })
   async deleteProduct(@Param('id') id: string): Promise<void> {
     await this.productsService.deleteProduct(id);
   }
