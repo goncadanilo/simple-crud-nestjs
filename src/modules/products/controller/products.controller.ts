@@ -8,7 +8,17 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ErrorResponse } from '../../../common/swagger/responses/ErrorResponse';
+import { ProductResponse } from '../../../common/swagger/responses/ProductResponse';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { Products } from '../entity/products.entity';
@@ -22,7 +32,7 @@ export class ProductsController {
   @Get()
   @HttpCode(200)
   @ApiOperation({ summary: 'Search all products' })
-  @ApiResponse({ status: 200, description: 'The found products' })
+  @ApiOkResponse({ type: [ProductResponse], description: 'The found products' })
   async findAllProducts(): Promise<Products[]> {
     return await this.productsService.findAllProducts();
   }
@@ -30,7 +40,8 @@ export class ProductsController {
   @Post()
   @HttpCode(201)
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiResponse({ status: 201, description: 'Created product' })
+  @ApiCreatedResponse({ type: ProductResponse, description: 'Created product' })
+  @ApiBadRequestResponse({ type: ErrorResponse, description: 'Bad Request' })
   async createProduct(@Body() data: CreateProductDto): Promise<Products> {
     return await this.productsService.createProduct(data);
   }
@@ -38,7 +49,8 @@ export class ProductsController {
   @Get(':id')
   @HttpCode(200)
   @ApiOperation({ summary: 'Search a products by id' })
-  @ApiResponse({ status: 200, description: 'The found product' })
+  @ApiOkResponse({ type: ProductResponse, description: 'The found product' })
+  @ApiNotFoundResponse({ type: ErrorResponse, description: 'Not Found' })
   async findProductById(@Param('id') id: string): Promise<Products> {
     return await this.productsService.findProductById(id);
   }
@@ -46,7 +58,8 @@ export class ProductsController {
   @Put(':id')
   @HttpCode(200)
   @ApiOperation({ summary: 'Update a product' })
-  @ApiResponse({ status: 200, description: 'Updated product' })
+  @ApiOkResponse({ type: ProductResponse, description: 'Updated product' })
+  @ApiNotFoundResponse({ type: ErrorResponse, description: 'Not Found' })
   async updateProduct(
     @Param('id') id: string,
     @Body() data: UpdateProductDto,
@@ -57,7 +70,8 @@ export class ProductsController {
   @Delete(':id')
   @HttpCode(204)
   @ApiOperation({ summary: 'Delete a product' })
-  @ApiResponse({ status: 204, description: 'Deleted product' })
+  @ApiNoContentResponse({ description: 'Deleted product' })
+  @ApiNotFoundResponse({ type: ErrorResponse, description: 'Not Found' })
   async deleteProduct(@Param('id') id: string): Promise<void> {
     await this.productsService.deleteProduct(id);
   }
