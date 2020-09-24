@@ -23,7 +23,7 @@ export class CreateProductsTable1600539230151 implements MigrationInterface {
       },
       {
         name: 'price',
-        type: 'decimal',
+        type: 'float4',
         isNullable: false,
       },
       {
