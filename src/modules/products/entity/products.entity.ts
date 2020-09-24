@@ -16,7 +16,7 @@ export class Products {
   @Column()
   description: string;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'float4' })
   price: number;
 
   @CreateDateColumn({ name: 'created_at' })
