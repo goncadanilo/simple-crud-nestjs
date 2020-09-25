@@ -63,6 +63,7 @@ Esse projeto é um simple CRUD de produtos desenvolvido com o intuito de estudar
 
 - crie uma cópia do `.env.example` como `.env` e defina suas variáveis do banco.
 - suba o banco de dados com docker: `docker-compose up -d`.
+
 _(se você não estiver usando o docker, é necessário criar o banco manualmente)_.
 - rode as migrations: `yarn typeorm migration:run`.
 
