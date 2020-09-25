@@ -41,7 +41,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [NestJS](https://nestjs.com/): framework utilizado para criação da aplicação.
 - [Postgres](https://www.postgresql.org/): banco SQL utilizado para armazenar os dados.
-- [Docker](https://www.docker.com/): utilizado para rodar o banco de dados.
+- [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/install/): utilizado para criar e rodar o container do banco de dados.
 - [Jest](https://jestjs.io/): utilizado para escrever os testes da aplicação.
 - [GitFlow](https://github.com/nvie/gitflow): utilizado no fluxo de desenvolvimento.
 - [Swagger](https://swagger.io/): utilizado para documentar a aplicação.
@@ -57,7 +57,7 @@ Esse projeto é um simple CRUD de produtos desenvolvido com o intuito de estudar
 - [Node.js](https://nodejs.org/en/).
 - [NestJS CLI](https://docs.nestjs.com/first-steps).
 - [Yarn](https://yarnpkg.com/) ou se preferir, pode usar o npm _(já vem com node)_.
-- [Docker](https://www.docker.com/) _(opcional)_.
+- [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/install/) _(opcional)_.
 
 ### Subir o banco
 
