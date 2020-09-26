@@ -69,6 +69,7 @@ _(se você não estiver usando o docker, é necessário criar o banco manualment
 
 ### Rodar a aplicação
 
+- para rodar a aplicação: `yarn start`.
 - para rodar a aplicação em modo watch: `yarn start:dev`.
 - a aplicação estará disponível no endereço: `http://localhost:3000`.
 - a documentação estará disponível no endereço: `http://localhost:3000/api`.
