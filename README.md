@@ -56,7 +56,7 @@ Esse projeto é um simple CRUD de produtos desenvolvido com o intuito de estudar
 
 - [Node.js](https://nodejs.org/en/).
 - [NestJS CLI](https://docs.nestjs.com/first-steps).
-- [Yarn](https://yarnpkg.com/) ou se preferir, pode usar o npm _(já vem com node)_.
+- [Yarn](https://yarnpkg.com/) ou se preferir, pode usar o npm _(já vem com o node)_.
 - [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/install/) _(opcional)_.
 
 ### Subir o banco
