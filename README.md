@@ -32,7 +32,7 @@
 <br>
 
 <p align="center">
-  <img alt="URL Shortener" src=".github/banner-crud-nestjs.png" width="80%">
+  <img alt="CRUD NestJS" src=".github/banner-crud-nestjs.png" width="80%">
 </p>
 
 ## 🚀 Tecnologias
